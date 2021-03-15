@@ -8,10 +8,12 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 
@@ -29,6 +31,12 @@ public class PropostaController {
 	@PostMapping(value = "/propostas")
 	@Transactional
 	public ResponseEntity<?> cria( @RequestBody @Valid NovaPropostaRequest request, UriComponentsBuilder uriComponentsBuilder ) {
+		
+		String documento = request.getDocumento();
+		if(propostaRepository.existsByDocumento(documento)) {
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Essa proposta já existe");
+		}
+				
 		
 		Proposta proposta = request.paraProposta();
 		propostaRepository.save(proposta);
