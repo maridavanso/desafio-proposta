@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,10 @@ public class Proposta {
 	@Embedded
 	private Endereco endereco;
 
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private PropostaStatus status = PropostaStatus.NAO_ELEGIVEL ;
+	
 	@Deprecated
 	public Proposta() {
 
@@ -38,11 +44,18 @@ public class Proposta {
 		this.nome = nome;
 		this.salario = salario;
 		this.endereco = endereco;
+		
 
 	}
 
 	public Long getId() {
 		return this.id;
 	}
+
+	public PropostaStatus getStatus() {
+		return status;
+	}
+	
+	
 
 }

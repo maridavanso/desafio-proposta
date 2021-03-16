@@ -16,33 +16,30 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
-
-
 @RestController
 public class PropostaController {
-	
+
 	@PersistenceContext
 	private EntityManager manager;
-	
+
 	@Autowired
 	private PropostaRepository propostaRepository;
-	
-	@PostMapping(value = "/propostas")
+
 	@Transactional
-	public ResponseEntity<?> cria( @RequestBody @Valid NovaPropostaRequest request, UriComponentsBuilder uriComponentsBuilder ) {
-		
+	@PostMapping(value = "/propostas")
+	public ResponseEntity<?> cria(@RequestBody @Valid NovaPropostaRequest request,
+			UriComponentsBuilder uriComponentsBuilder) {
+
 		String documento = request.getDocumento();
-		if(propostaRepository.existsByDocumento(documento)) {
+		if (propostaRepository.existsByDocumento(documento)) {
 			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Essa proposta já existe");
 		}
-				
-		
+
 		Proposta proposta = request.paraProposta();
 		propostaRepository.save(proposta);
-		
-		URI location = uriComponentsBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri() ;
+
+		URI location = uriComponentsBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
 		return ResponseEntity.created(location).build();
-		
+
 	}
 }
