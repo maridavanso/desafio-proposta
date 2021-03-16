@@ -1,6 +1,7 @@
 package br.com.apizup.proposta.criacaoproposta;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -31,6 +32,7 @@ public class Proposta {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private PropostaStatus status = PropostaStatus.NAO_ELEGIVEL ;
+	private LocalDateTime updateAt = LocalDateTime.now();
 	
 	@Deprecated
 	public Proposta() {
@@ -54,6 +56,39 @@ public class Proposta {
 
 	public PropostaStatus getStatus() {
 		return status;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public BigDecimal getSalario() {
+		return salario;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	@Override
+	public String toString() {
+		return "Proposta [id=" + id + ", documento=" + documento + ", email=" + email + ", nome=" + nome + ", salario="
+				+ salario + ", endereco=" + endereco + ", status=" + status + "]";
+	}
+	
+	public void atualizaStatus(PropostaStatus status) {
+		this.status = status;
+		this.updateAt = LocalDateTime.now();
+		
+
 	}
 	
 	
