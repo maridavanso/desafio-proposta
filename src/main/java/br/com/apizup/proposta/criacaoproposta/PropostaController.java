@@ -29,7 +29,7 @@ public class PropostaController {
 
 	@Autowired
 	private PropostaRepository propostaRepository;
-	
+
 	@Autowired
 	private AnaliseFinanceiraCliente analiseFinanceiraCliente;
 
@@ -46,23 +46,26 @@ public class PropostaController {
 		Proposta proposta = request.paraProposta();
 		propostaRepository.save(proposta);
 
-		EnviaParaAnaliseRequest req = new EnviaParaAnaliseRequest(proposta);
-		
-		PropostaStatus status = null;
-		try {
-			
-			EnviaParaAnaliseResponse response = analiseFinanceiraCliente.enviaParaAnalise(req);
-			status = response.toModel();
-			
-		} catch (FeignException.UnprocessableEntity e) {
-			status = PropostaStatus.NAO_ELEGIVEL;
-			
-		}
-		
+		PropostaStatus status = enviaParaAnalise(proposta);
 		proposta.atualizaStatus(status);
-		
+
 		URI location = uriComponentsBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
 		return ResponseEntity.created(location).build();
 
+	}
+
+	private PropostaStatus enviaParaAnalise(Proposta proposta) {
+
+		PropostaStatus status = null;
+		try {
+			EnviaParaAnaliseRequest req = new EnviaParaAnaliseRequest(proposta);
+			EnviaParaAnaliseResponse response = analiseFinanceiraCliente.enviaParaAnalise(req);
+			return response.toModel();
+
+		} catch (FeignException.UnprocessableEntity e) {
+			return PropostaStatus.NAO_ELEGIVEL;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Um erro inesperado aconteceu");
+		}
 	}
 }
