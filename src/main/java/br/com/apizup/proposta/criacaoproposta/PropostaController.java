@@ -35,6 +35,8 @@ public class PropostaController {
 
 	@Autowired
 	private AnaliseFinanceiraCliente analiseFinanceiraCliente;
+	
+
 
 	@Transactional
 	@PostMapping(value = "/propostas")
@@ -51,9 +53,10 @@ public class PropostaController {
 
 		PropostaStatus status = enviaParaAnalise(proposta);
 		proposta.atualizaStatus(status);
+		
 
 		URI location = uriComponentsBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body(new NovaPropostaResponse(proposta));
 
 	}
 

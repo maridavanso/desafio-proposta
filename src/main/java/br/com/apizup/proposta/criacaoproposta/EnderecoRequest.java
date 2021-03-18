@@ -13,7 +13,25 @@ public class EnderecoRequest {
 	@NotBlank
 	private String cep;
 	
+	@Deprecated
+	public EnderecoRequest(Endereco endereco) {
+
+	}
+
+	public EnderecoRequest(Endereco endereco, @NotBlank String logradouro, @NotBlank String numero, @NotBlank String cep) {
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.cep = cep;
+	}
 	
+	
+
+	
+
+	@Override
+	public String toString() {
+		return "EnderecoRequest [logradouro=" + logradouro + ", numero=" + numero + ", cep=" + cep + "]";
+	}
 
 	public String getLogradouro() {
 		return logradouro;
