@@ -7,9 +7,11 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.apizup.proposta.integracao.AnaliseFinanceiraCliente;
 import br.com.apizup.proposta.integracao.EnviaParaAnaliseRequest;
 import br.com.apizup.proposta.integracao.EnviaParaAnaliseResponse;
+import ch.qos.logback.classic.Logger;
 import feign.FeignException;
 
 @RestController
@@ -55,17 +58,15 @@ public class PropostaController {
 	}
 
 	private PropostaStatus enviaParaAnalise(Proposta proposta) {
-
-		PropostaStatus status = null;
 		try {
 			EnviaParaAnaliseRequest req = new EnviaParaAnaliseRequest(proposta);
 			EnviaParaAnaliseResponse response = analiseFinanceiraCliente.enviaParaAnalise(req);
 			return response.toModel();
-
 		} catch (FeignException.UnprocessableEntity e) {
 			return PropostaStatus.NAO_ELEGIVEL;
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Um erro inesperado aconteceu");
 		}
 	}
+
 }
