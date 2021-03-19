@@ -15,6 +15,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
+
+import feign.Logger;
+
 @Entity
 public class Proposta {
 
@@ -49,6 +53,8 @@ public class Proposta {
 		
 
 	}
+	
+
 
 	public Long getId() {
 		return this.id;

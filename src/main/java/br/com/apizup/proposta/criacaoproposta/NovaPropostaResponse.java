@@ -2,6 +2,10 @@ package br.com.apizup.proposta.criacaoproposta;
 
 import java.math.BigDecimal;
 
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
+
+import feign.Logger;
+
 public class NovaPropostaResponse {
 	private String documento;
 	private String email;
@@ -9,7 +13,7 @@ public class NovaPropostaResponse {
     private BigDecimal salario;
     private EnderecoRequest endereco;
     private PropostaStatus propostaStatus;
-    
+  
 
 	public NovaPropostaResponse(Proposta proposta) {
 		this.documento = proposta.getDocumento();
@@ -19,7 +23,7 @@ public class NovaPropostaResponse {
 		this.endereco = new EnderecoRequest(proposta.getEndereco());
 		this.propostaStatus = proposta.getStatus();
 	}
-
+	
 
 	public String getDocumento() {
 		return documento;
