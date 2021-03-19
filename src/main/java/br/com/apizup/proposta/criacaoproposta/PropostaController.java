@@ -7,11 +7,10 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +20,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.apizup.proposta.integracao.AnaliseFinanceiraCliente;
 import br.com.apizup.proposta.integracao.EnviaParaAnaliseRequest;
 import br.com.apizup.proposta.integracao.EnviaParaAnaliseResponse;
-import ch.qos.logback.classic.Logger;
 import feign.FeignException;
 
 @RestController
@@ -59,6 +57,12 @@ public class PropostaController {
 		return ResponseEntity.created(location).body(new NovaPropostaResponse(proposta));
 
 	}
+	
+	public BodyBuilder obterProposta(){
+	  
+	    return ResponseEntity.status(HttpStatus.NOT_FOUND);
+	}
+
 
 	private PropostaStatus enviaParaAnalise(Proposta proposta) {
 		try {
