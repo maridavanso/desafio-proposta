@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import br.com.apizup.proposta.integracao.AnaliseFinanceiraCliente;
 import br.com.apizup.proposta.integracao.EnviaParaAnaliseRequest;
 import br.com.apizup.proposta.integracao.EnviaParaAnaliseResponse;
 import feign.FeignException;
+import feign.Logger;
 
 @RestController
 public class PropostaController {
@@ -34,7 +36,6 @@ public class PropostaController {
 	@Autowired
 	private AnaliseFinanceiraCliente analiseFinanceiraCliente;
 	
-
 
 	@Transactional
 	@PostMapping(value = "/propostas")
