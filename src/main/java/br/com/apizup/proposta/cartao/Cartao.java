@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import br.com.apizup.proposta.bloqueiocartao.BloqueioCartao;
 import br.com.apizup.proposta.criacaoproposta.Proposta;
 
 @Entity
@@ -22,6 +23,16 @@ public class Cartao {
 
 	@Deprecated
 	public Cartao() {
+	}
+
+	public String getNumeroCartao() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void addBloqueio(BloqueioCartao bloqueioCartao) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
