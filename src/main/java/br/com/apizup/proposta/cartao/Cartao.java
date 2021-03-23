@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import br.com.apizup.proposta.bloqueiocartao.BloqueioCartao;
+import br.com.apizup.proposta.carteiras.Carteira;
 import br.com.apizup.proposta.criacaoproposta.Proposta;
 
 @Entity
@@ -31,6 +32,11 @@ public class Cartao {
 	}
 
 	public void addBloqueio(BloqueioCartao bloqueioCartao) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addCarteira(Carteira carteira) {
 		// TODO Auto-generated method stub
 		
 	}

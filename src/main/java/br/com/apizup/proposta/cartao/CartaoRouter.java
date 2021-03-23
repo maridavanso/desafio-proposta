@@ -9,6 +9,8 @@ import br.com.apizup.proposta.avisos.AvisoViagemRequest;
 import br.com.apizup.proposta.avisos.AvisoViagemResponse;
 import br.com.apizup.proposta.bloqueiocartao.BloqueioCartaoRequest;
 import br.com.apizup.proposta.bloqueiocartao.BloqueioCartaoResponse;
+import br.com.apizup.proposta.carteiras.CarteiraRequest;
+import br.com.apizup.proposta.carteiras.CarteiraResponse;
 
 @FeignClient(name = "cartoes", url = "http://localhost:9999/")
 public interface CartaoRouter {
@@ -21,4 +23,7 @@ public interface CartaoRouter {
 	 
 	 @PostMapping("api/cartoes/{id}/avisos")
 	    AvisoViagemResponse avisoViagem(@PathVariable String id, AvisoViagemRequest avisoRequest);
+	 
+	 @PostMapping("/api/cartoes/{id}/carteiras")
+	    CarteiraResponse criaCarteira(@PathVariable String id, CarteiraRequest carteiraRequest);
 }
